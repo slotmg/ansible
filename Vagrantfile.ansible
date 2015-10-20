@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby
+
+VAGRANTFILE_API_VERSION = "2" # versao da api do Vagrant
+
+# Bloco que deve executar com nome de config
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    # config.vm cria um objeto que descreve um servidor.
+    # com nome de testvm e debian jessie 64b
+    # um ip privado
+    config.vm.define "testvm" do |testvm|
+        testvm.vm.box = "debian/jessie64"
+        testvm.vm.network :private_network, ip: "10.0.117.1 "
+        
+        testvm.vm.provision "ansible" do |ansible|
+            ansible.playbook = "webserver.yml"
+            ansible.verbose = "vvv"
+        end
+    end
+
+    # este bloco da acesso ao provedor do servidor.
+    # este servidor esta com 512MB
+    config.vm.provider "virtualbox" do |v|
+        v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+
+end
