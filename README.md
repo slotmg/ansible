@@ -1,1 +1,2 @@
-# Script de testes
+Testevm
+|________Vagrantfile (arquivo de configuracao de uma vm simples)
