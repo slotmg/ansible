@@ -1,1 +1,1 @@
-# testes
+# Script de testes
