@@ -9,3 +9,5 @@ Vagrantfile.ansible (arquivo de configuracao de um nginx usando ansible)
 webserver.sh (script de instalacao do nginx do arquivo Vagrantfile.webserver)
 
 webserver.yml (script do ansible)
+
+SL8 arquivos para criacao do projeto sl8.
