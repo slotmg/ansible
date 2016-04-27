@@ -1,0 +1,45 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby 
+VAGRANTFILE_API_VERSION =   "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION)  do  |config|
+	# configuracao da loadbalance
+	config.vm.define "loadbalance" do |loadbalance|
+		loadbalance.vm.box = "debian/jessie64"
+		loadbalance.vm.hostname = "loadbalance"
+		loadbalance.vm.network :private_network, ip: "10.0.117.2", bridge: "xenbr0"
+		loadbalance.vm.provider :virtualbox do |v|
+			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+			v.customize ["modifyvm", :id, "--memory", 512]
+			v.customize ["modifyvm", :id, "--name", loadbalance]
+		end
+	end
+	# configuracao da nginx1
+	config.vm.define "nginx1" do |nginx1|
+		nginx1.vm.box = "debian/jessie64"
+		nginx1.vm.hostname = "nginx1"
+		nginx1.vm.network :private_network, ip: "10.0.117.3", bridge: "xenbr0"
+		nginx1.vm.provider :virtualbox do |v|
+			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+			v.customize ["modifyvm", :id, "--memory", 512]
+			v.customize ["modifyvm", :id, "--name", nginx1]
+		end
+	end
+	# configuracao da nginx2
+	config.vm.define "nginx2" do |nginx2|
+		nginx2.vm.box = "debian/jessie64"
+		nginx2.vm.hostname = "nginx2"
+		nginx2.vm.network :private_network, ip: "10.0.117.4", bridge: "xenbr0"
+		nginx2.vm.provider :virtualbox do |v|
+			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+			v.customize ["modifyvm", :id, "--memory", 512]
+			v.customize ["modifyvm", :id, "--name", nginx2]
+		end
+	end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "start.yml"
+    ansible.inventory_path = "./hosts"
+  end
+end
+

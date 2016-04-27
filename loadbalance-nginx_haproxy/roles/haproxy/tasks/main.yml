@@ -1,0 +1,6 @@
+- name: Instalando HAPROXY
+  apt: name=haproxy state=latest install_recommends=yes
+- name: Copiando configuracao
+  copy: src=haproxy.cfg dest=/etc/haproxy/haproxy.cfg
+- name: Reiniciando HAPROXY
+  service: name=haproxy state=started enabled=true

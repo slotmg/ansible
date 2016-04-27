@@ -1,0 +1,10 @@
+- name: "ADICIONANDO REPOSITORIO NGINX."
+  apt_repository: repo="deb http://nginx.org/packages/debian/ jessie nginx" state=present
+- name: "ADICIONANDO CHAVES NGINX."
+  apt_key: url=http://nginx.org/keys/nginx_signing.key state=present 
+- name: "APT-GET UPDATE"
+  apt: update_cache=yes
+- name: "NGINX"
+  apt: name=nginx state=latest install_recommends=yes
+- name: "ATIVANDO NGINX"
+  service: name=nginx state=started enabled=yes

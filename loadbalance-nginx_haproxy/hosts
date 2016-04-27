@@ -1,0 +1,6 @@
+[haproxy]
+loadbalance ansible_host=10.0.117.2
+
+[nginx]
+nginx1 ansible_host=10.0.117.3
+nginx2 ansible_host=10.0.117.4

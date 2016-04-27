@@ -1,0 +1,21 @@
+# start inicial
+- name: Ativando Loadbalance HAPROXY / NGINX  PADRAO
+  hosts: all
+  user: vagrant
+  sudo: yes
+  roles:
+    - common
+
+- hosts: haproxy
+  user: vagrant
+  sudo: yes
+  roles:
+    - haproxy
+  
+- hosts: nginx
+  user: vagrant
+  sudo: yes
+  roles: 
+    - nginx
+
+
