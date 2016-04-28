@@ -1,6 +1,6 @@
 [haproxy]
-loadbalance ansible_host=10.0.117.2
+loadbalance ansible_host=10.0.117.2 ansible_hostname=loadbalance
 
 [nginx]
-nginx1 ansible_host=10.0.117.3
-nginx2 ansible_host=10.0.117.4
+nginx1 ansible_host=10.0.117.3 ansible_hostname=nginx1
+nginx2 ansible_host=10.0.117.4 ansible_hostname=nginx2

@@ -1,4 +1,3 @@
-# start inicial
 - name: Ativando Loadbalance HAPROXY / NGINX  PADRAO
   hosts: all
   user: vagrant

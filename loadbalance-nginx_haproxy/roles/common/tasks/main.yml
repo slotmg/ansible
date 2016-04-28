@@ -1,10 +1,10 @@
-- name: "PREPARANDO SOURCES.LIST"
+- name: Preparando sources.list
   copy: src=sources.list dest=/etc/apt/sources.list 
-- name: "APT-GET UPDATE"
+- name: apt-get update
   apt: update_cache=yes
-- name: "APT-GET UPGRADE"
+- name: apt-get upgrade
   apt: upgrade=dist
-- name: "INSTALANDO PACOTES."
+- name: Instalando pacotes.
   apt: name={{item}} state=latest install_recommends=yes
   with_items:
     - locales
@@ -27,19 +27,19 @@
     - unzip
     - wget 
     - vim
-- name: "LOCALE"
+- name: Configurando locale.
   action: shell locale-gen pt_BR.UTF-8
-- name: "ATUALIZANDO LOCALE"
+- name: Atualizando locale.
   action: shell locale-gen
-- name: "CONFIGURANDO VIM"
+- name: Configurando vim.
   action: shell update-alternatives --set editor /usr/bin/vim.basic
-- name: "FINALIZANDO VIM"
+- name: Finalizando vim.
   lineinfile:
     dest=/etc/vim/vimrc
     regexp='"syntax on'
     line='syntax on'
     state=present
-- name: "SISTEMA OPERACIONAL: ADICIONANDO USUARIO GSS."
+- name: Adicionando usuario gss.
   user: name=gss shell=/bin/bash password="$1$h3V2CGCm$mlBh4FLOgI6si.8so5TOh."
-- name: "SISTEMA OPERACIONAL: ALTERANDO SENHA DO ROOT."
+- name: Alterando senha do root.
   user: name=root update_password=always password="$1$Yvfgv4KY$wlzKPdhodtvxoSbxMt.eW."

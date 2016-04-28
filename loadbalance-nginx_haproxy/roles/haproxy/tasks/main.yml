@@ -2,5 +2,13 @@
   apt: name=haproxy state=latest install_recommends=yes
 - name: Copiando configuracao
   copy: src=haproxy.cfg dest=/etc/haproxy/haproxy.cfg
-- name: Reiniciando HAPROXY
+- name: Start do HAPROXY
   service: name=haproxy state=started enabled=true
+- name: Start do HAPROXY
+  service: name=haproxy state=restarted enabled=true
+- name: Acerto rsyslog
+  copy: src=rsyslog.conf dest=/etc/rsyslog.conf
+- name: Acerto rsyslog haproxy
+  copy: src=49-haproxy.conf dest=/etc/rsyslog.d/49-haproxy.conf
+- name: Restart rsyslog
+  service: name=rsyslog state=restarted
