@@ -1,0 +1,7 @@
+deb [arch=amd64,i386] http://httpredir.debian.org/debian jessie main contrib non-free
+deb [arch=amd64,i386] http://httpredir.debian.org/debian jessie-updates main contrib non-free
+deb [arch=amd64,i386] http://security.debian.org/ jessie/updates main contrib non-free
+deb-src [arch=amd64,i386] http://httpredir.debian.org/debian jessie main contrib non-free
+deb-src [arch=amd64,i386] http://httpredir.debian.org/debian jessie-updates main contrib non-free
+deb-src [arch=amd64,i386] http://security.debian.org/ jessie/updates main contrib non-free
+

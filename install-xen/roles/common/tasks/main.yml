@@ -1,0 +1,46 @@
+- name: Preparando sources.list
+  copy: src=sources.list dest=/etc/apt/sources.list 
+- name: apt-get update
+  apt: update_cache=yes
+- name: apt-get upgrade
+  apt: upgrade=dist
+- name: Instalando pacotes.
+  apt: name={{item}} state=latest install_recommends=yes
+  with_items:
+    - locales
+    - aspell-pt-br
+    - apt-file
+    - aptitude
+    - screen
+    - iptraf 
+    - bzip2
+    - fping 
+    - lsof 
+    - links 
+    - links2 
+    - curl 
+    - less
+    - logtail
+    - lsb-release
+    - pv
+    - rsync 
+    - unzip
+    - wget 
+    - vim
+    - htop
+    - strace
+    - nmon
+    - lvm2
+    - rsync
+- name: Configurando locale.
+  action: shell locale-gen pt_BR.UTF-8
+- name: Atualizando locale.
+  action: shell locale-gen
+- name: Configurando vim.
+  action: shell update-alternatives --set editor /usr/bin/vim.basic
+- name: Finalizando vim.
+  lineinfile:
+    dest=/etc/vim/vimrc
+    regexp='"syntax on'
+    line='syntax on'
+    state=present

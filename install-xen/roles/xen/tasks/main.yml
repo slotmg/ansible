@@ -1,0 +1,107 @@
+- name: Instalando pacotes 1/5
+  apt: name={{item}} state=latest install_recommends=yes
+  with_items:
+    - bcc
+    - bin86
+    - gawk
+    - bridge-utils
+    - iproute
+    - libcurl3
+    - libcurl4-openssl-dev
+    - bzip2
+    - module-init-tools
+    - transfig
+    - texinfo
+    - texlive-latex-base 
+    - texlive-latex-recommended 
+    - texlive-fonts-extra 
+    - texlive-fonts-recommended 
+    - pciutils-dev 
+    - mercurial
+    - libc6-dev 
+
+- name: Instalando pacotes 2/5
+  apt: name={{item}} state=latest install_recommends=yes
+  with_items:
+    - zlib1g-dev 
+    - python 
+    - python-dev
+    - python-twisted 
+    - libncurses5-dev 
+    - patch 
+    - libvncserver-dev 
+    - libsdl-dev 
+    - iasl 
+    - libbz2-dev 
+    - e2fslibs-dev 
+
+- name: Instalando pacotes 3/5
+  apt: name={{item}} state=latest install_recommends=yes
+  with_items:
+    - git-core 
+    - uuid-dev 
+    - ocaml 
+    - ocaml-findlib 
+    - libx11-dev 
+    - bison 
+    - flex 
+    - xz-utils 
+    - libyajl-dev
+    - libaio-dev
+    - pandoc
+    - markdown
+
+- name: Instalando pacotes 4/5
+  apt: name={{item}} state=latest install_recommends=yes
+  with_items:
+    - gettext 
+    - libpixman-1-dev 
+    - libc6-dev-i386 
+    - libnl-3-dev 
+    - libnl-3-200-dbg 
+    - libnl-route-3-dev
+    - libsystemd-dev 
+    - libnl-3-dev 
+    - libnl-3-200-dbg 
+    - libnl-route-3-dev
+
+- name: Instalando pacotes 5/5
+  apt: name={{item}} state=latest install_recommends=yes
+  with_items:
+    - libsystemd-daemon-dev 
+    - libsystemd-daemon0  
+    - libsystemd-dev  
+    - libsystemd-journal-dev 
+    - libsystemd0
+    - liblzo2-2 
+    - liblzo2-dev 
+    - libxen-dev
+    - libcurl4-openssl-dev 
+    - libncurses5-dev 
+    - libjpeg-dev
+    - libspice-protocol-dev
+    - libspice-server-dev 
+    - libusbredirparser-dev 
+    - libusb-1.0-0-dev
+
+- name: Download do Xen.
+  #Testar o unarchive com o https
+  #unarchive: src=https://www.xenproject.org/downloads/xen-archives/xen-46-series/xen-461/329-xen-461/file.html dest=/usr/src/ copy=no
+  get_url: url=http://www.xenproject.org/downloads/xen-archives/xen-46-series/xen-461/329-xen-461/file.html dest=/usr/src/xen-4.6.1.tar.gz validate_certs=no
+- name: Descompactando Xen.
+  command: tar zxf /usr/src/xen-4.6.1.tar.gz -C /usr/src
+- name: Compilando Xen.
+  command: make -j4 clean chdir=/usr/src/xen-4.6.1
+- command: echo "PYTHON_PREFIX_ARG=--install-layout=deb" > /usr/src/xen-4.6.1/.config
+- command: ./configure --libdir=/usr/lib --enable-systemd chdir=/usr/src/xen-4.6.1
+- command: make -j2 dist chdir=/usr/src/xen-4.6.1
+- command: make -j2 install chdir=/usr/src/xen-4.6.1
+- name: Ativando Xen.
+  command: systemctl enable xenstored.service
+- command: systemctl enable xenconsoled.service
+- command: systemctl enable xen-init-dom0.service
+- command: systemctl enable xen-qemu-dom0-disk-backend.service
+#- command: systemctl enable xendomains.service
+- command: ldconfig chdir=/usr/src/xen-4.6.1
+
+# Falta fazer o /etc/grub.d/08_xen

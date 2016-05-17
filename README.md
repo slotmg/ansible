@@ -9,4 +9,4 @@ Minhas receitas usando Ansible.
 ## Receitas
 
 * loadbalance-nginx_haproxy -> Debian com HAPROXY e NGINX (1 haproxy e 2 nginx)
-* simples -> receita basica com troca de hostname baseado no inventory
+* install-xen -> Instalacao de um servidor Xen (4.6.1), Debian Jessie (netboot) e Linux (4.5.4)

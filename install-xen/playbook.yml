@@ -1,0 +1,7 @@
+- name: PREPARANDO PACOTES
+  hosts: all
+  remote_user: root
+  roles:
+    #- common
+    #- linux
+    - xen

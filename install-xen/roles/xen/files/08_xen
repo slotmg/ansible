@@ -1,0 +1,15 @@
+#!/bin/sh
+exec tail -n +3 $0
+menuentry 'Debian GNU/Linux, with Xen 4.6.1 and Linux 4.5.4' --class debian --class gnu-linux --class gnu --class os --class xen {
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set=root 906ec9c3-f90d-4c71-a4c0-9d3defadf0c4
+	echo	'Loading Xen 4.6.1 ...'
+	multiboot	/boot/xen.gz placeholder  
+	echo	'Loading Linux 4.5.4 ...'
+	module	/boot/vmlinuz-4.5.4 placeholder root=UUID=906ec9c3-f90d-4c71-a4c0-9d3defadf0c4 ro  quiet
+	echo	'Loading initial ramdisk ...'
+	module	/boot/initrd.img-4.5.4
+}
+
