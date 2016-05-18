@@ -64,6 +64,7 @@
     - libnl-3-dev 
     - libnl-3-200-dbg 
     - libnl-route-3-dev
+    - liblzma-dev
 
 - name: Instalando pacotes 5/5
   apt: name={{item}} state=latest install_recommends=yes

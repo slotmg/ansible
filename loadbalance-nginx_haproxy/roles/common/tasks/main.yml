@@ -43,3 +43,4 @@
   user: name=gss shell=/bin/bash password="$1$h3V2CGCm$mlBh4FLOgI6si.8so5TOh."
 - name: Alterando senha do root.
   user: name=root update_password=always password="$1$Yvfgv4KY$wlzKPdhodtvxoSbxMt.eW."
+
