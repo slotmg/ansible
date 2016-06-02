@@ -7,31 +7,7 @@
 - name: Instalando pacotes.
   apt: name={{item}} state=latest install_recommends=yes
   with_items:
-    - locales
-    - aspell-pt-br
-    - apt-file
-    - aptitude
-    - screen
-    - iptraf 
-    - bzip2
-    - fping 
-    - lsof 
-    - links 
-    - links2 
-    - curl 
-    - less
-    - logtail
-    - lsb-release
-    - pv
-    - rsync 
-    - unzip
-    - wget 
-    - vim
-    - htop
-    - strace
-    - nmon
-    - lvm2
-    - rsync
+    - "{{ common_packages }}"
 - name: Configurando locale.
   action: shell locale-gen pt_BR.UTF-8
 - name: Atualizando locale.

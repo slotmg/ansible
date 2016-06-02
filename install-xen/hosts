@@ -1,1 +1,2 @@
-slot ansible_ssh=10.0.20.101
+teste ansible_ssh_host=10.0.117.1 ansible_ssh=10.0.117.1 ansible_ssh_user=root ansible_ssh_pass=planet1
+slot ansible_ssh=10.0.20.101 ansible_ssh_user=root ansible_ssh_pass=planet1

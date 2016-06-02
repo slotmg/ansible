@@ -1,0 +1,110 @@
+## Common
+common_packages:
+    - locales
+    - aspell-pt-br
+    - apt-file
+    - aptitude
+    - screen
+    - iptraf 
+    - bzip2
+    - fping 
+    - lsof 
+    - links 
+    - links2 
+    - curl 
+    - less
+    - logtail
+    - lsb-release
+    - pv
+    - rsync 
+    - unzip
+    - wget 
+    - vim
+    - htop
+    - strace
+    - nmon
+    - lvm2
+    - rsync
+
+## Linux
+linux_packages:
+    - libncurses5-dev
+    - build-essential
+    - libncurses-dev
+    - ncurses-dev
+    - gcc
+    - bison
+    - make
+    - automake
+
+## Xen
+xen_packages:
+    - bcc
+    - bin86
+    - gawk
+    - bridge-utils
+    - iproute
+    - libcurl3
+    - libcurl4-openssl-dev
+    - bzip2
+    - module-init-tools
+    - transfig
+    - texinfo
+    - texlive-latex-base
+    - texlive-latex-recommended
+    - texlive-fonts-extra
+    - texlive-fonts-recommended
+    - pciutils-dev
+    - mercurial
+    - libc6-dev
+    - zlib1g-dev
+    - python
+    - python-dev
+    - python-twisted
+    - libncurses5-dev
+    - patch
+    - libvncserver-dev
+    - libsdl-dev
+    - iasl
+    - libbz2-dev
+    - e2fslibs-dev
+    - git-core
+    - uuid-dev
+    - ocaml
+    - ocaml-findlib
+    - libx11-dev
+    - bison
+    - flex
+    - xz-utils
+    - libyajl-dev
+    - libaio-dev
+    - pandoc
+    - markdown
+    - gettext
+    - libpixman-1-dev
+    - libc6-dev-i386
+    - libnl-3-dev
+    - libnl-3-200-dbg
+    - libnl-route-3-dev
+    - libsystemd-dev
+    - libnl-3-dev
+    - libnl-3-200-dbg
+    - libnl-route-3-dev
+    - liblzma-dev
+    - libsystemd-daemon-dev
+    - libsystemd-daemon0
+    - libsystemd-dev
+    - libsystemd-journal-dev
+    - libsystemd0
+    - liblzo2-2
+    - liblzo2-dev
+    - libxen-dev
+    - libcurl4-openssl-dev
+    - libncurses5-dev
+    - libjpeg-dev
+    - libspice-protocol-dev
+    - libspice-server-dev
+    - libusbredirparser-dev
+    - libusb-1.0-0-dev
+
+

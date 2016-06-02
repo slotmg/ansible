@@ -1,33 +1,65 @@
 - name: "Instalando pacotes"
   apt: name={{item}} state=latest install_recommends=yes
   with_items:
-    - libncurses5-dev
-    - build-essential
-    - libncurses-dev 
-    - ncurses-dev
-    - gcc
-    - bison
-    - make 
-    - automake
+    - "{{ linux_packages }}"
+
 - name: "Download do Kernel."
-  unarchive: src=https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.5.4.tar.xz dest=/usr/src/ copy=no
+  get_url: url=https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.5.5.tar.xz dest=/usr/src/ validate_certs=no checksum=md5:9eac87725b45946890d2782429511e31
+
+- name: "Descompactando Kernel."
+  command: tar -Jxf /usr/src/linux-4.5.5.tar.xz -C /usr/src/
+
 - name: "Copiando .config"
-  copy: src=/boot/config-3.16.0-4-amd64 dest=/usr/src/linux-4.5.4/.config
-- name: "Compilando"
-  command: make xenconfig chdir=/usr/src/linux-4.5.4
-- name: "Compilando"
-  command: make -j2 all chdir=/usr/src/linux-4.5.4
-- name: "Instalando Modulos"
-  command: make -j2 modules_install chdir=/usr/src/linux-4.5.4 
-- name: "Finalizando o Linux"
-  # Nao consegui identificar ate agora o erro do modulo copy
-  #copy: src={{ item.origem }} dest={{ item.destino }} force=yes
+  copy: src=/boot/config-3.16.0-4-amd64 dest=/usr/src/linux-4.5.5/.config
+
+- name: "Adaptando Kernel."
+  make: 
+    chdir: /usr/src/linux-4.5.5 
+    target: olddefconfig 
+    params: 
+      NUM_THREADS: 2
+
+- name: "Make xenconfig."
+  make: 
+    chdir: /usr/src/linux-4.5.5 
+    target: xenconfig
+    params: 
+      NUM_THREADS: 2
+
+- name: "Make all."
+  make: 
+    chdir: /usr/src/linux-4.5.5 
+    target: all
+    params: 
+      NUM_THREADS: 2
+
+- name: "Make modules_install."
+  make: 
+    chdir: /usr/src/linux-4.5.5 
+    target: modules_install
+    params: 
+      NUM_THREADS: 2
+
+- name: "Copiando o Linux"
   command: cp {{ item.origem}} {{ item.destino }} 
   with_items:
-    - { origem: '/usr/src/linux-4.5.4/System.map', destino: '/boot/System.map-4.5.4' }
-    - { origem: '/usr/src/linux-4.5.4/.config', destino: '/boot/config-4.5.4' }
-    - { origem: '/usr/src/linux-4.5.4/arch/x86_64/boot/bzImage', destino: '/boot/vmlinuz-4.5.4' }
+    - { origem: '/usr/src/linux-4.5.5/System.map', destino: '/boot/System.map-4.5.5' }
+    - { origem: '/usr/src/linux-4.5.5/.config', destino: '/boot/config-4.5.5' }
+    - { origem: '/usr/src/linux-4.5.5/arch/x86_64/boot/bzImage', destino: '/boot/vmlinuz-4.5.5' }
+
 - name: "mkinitramfs"
-  command: mkinitramfs -o /boot/initrd.img-4.5.4 4.5.4 chdir=/lib/modules
+  command: mkinitramfs -o /boot/initrd.img-4.5.5 4.5.5 chdir=/lib/modules
+
 - name: "Upgrade-grub"
   command: update-grub2
+
+- name: "Reiniciando o servidor."
+  shell: sleep 2 && reboot -n 
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+- name: "Esperando o servidor voltar."
+#  local_action: wait_for host={{ inventory_hostname }} state=started delay=30 timeout=300
+  local_action: wait_for host={{ ansible_ssh_host }} state=started delay=30
+
