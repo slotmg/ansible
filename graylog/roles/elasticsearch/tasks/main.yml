@@ -1,0 +1,40 @@
+- name: Adicionando repositorios Elasticsearch e backports.
+  apt_repository: repo={{ item }} state=present 
+  with_items:
+    - deb https://packages.elastic.co/elasticsearch/2.x/debian stable main
+    - deb http://httpredir.debian.org/debian jessie-backports main
+
+- name: Adicionando chaves.
+  apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present validate_certs=no
+
+- name: Instalando pacotes.
+  apt: name={{ item }} state=latest install_recommends=yes update_cache=yes
+  with_items:
+    - "{{ elasticsearch_packages }}"
+
+- name: Configurando Elasticsearch.
+  template: src={{ item.origem }} dest={{ item.destino }} force=yes backup=yes
+  with_items:
+    - { origem: elasticsearch, destino: /etc/default/elasticsearch }
+    - { origem: elasticsearch.yml, destino: /etc/elasticsearch/elasticsearch.yml }
+
+- name: Servico do elasticsearch.
+  service: name=elasticsearch enabled=yes state=started
+
+- name: Aguarde o elasticsearch subir.
+  pause: seconds=10
+
+#- name: Verificando status.
+#  shell: curl -s -XGET 'http://localhost:9200/_cluster/health?pretty=true'
+#  register: elasticsearch_status
+#  failed_when: "'red' in elasticsearch_status.stdout"
+
+- name: Verificando status.
+  uri:
+    url: http://localhost:9200/_cluster/health?pretty=true
+    return_content: yes
+  register: elasticsearch_status
+
+- fail: msg="Erro no elasticsearch"
+  when: "'red' in elasticsearch_status.content"
+

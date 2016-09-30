@@ -1,0 +1,16 @@
+- name: Adicionando chaves.
+  apt_key: url=http://nginx.org/keys/nginx_signing.key state=present validate_certs=no
+
+- name: Adicionando repositorio.
+  apt_repository: repo="deb http://nginx.org/packages/debian/ jessie nginx" state=present
+
+- name: Apt instalando pacotes.
+  apt: name={{ item }} state=latest install_recommends=yes update_cache=yes
+  with_items:
+    - "{{ nginx_packages }}"
+
+- name: Copiando arquivos.
+  template: src=default.conf dest=/etc/nginx/conf.d/default.conf
+
+- name: Reiniciando
+  service: name=nginx state=restarted

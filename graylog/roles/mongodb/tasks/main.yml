@@ -1,0 +1,15 @@
+- name: Instalando pacotes.
+  apt: name={{ item }} state=latest install_recommends=yes update_cache=yes
+  with_items:
+    - "{{ mongodb_packages }}"
+
+- name: Configurando banco.
+  lineinfile:
+    dest=/etc/mongodb.conf
+    regexp='#port = 27017'
+    line='port = 27017'
+    state=present
+
+- name: Criando usuario e banco.
+  mongodb_user: database={{ mongodb_database }} name={{ mongodb_usuario }} password={{ mongodb_senha }} state=present
+

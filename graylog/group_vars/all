@@ -1,0 +1,82 @@
+## Configuracao timezone
+locale: pt_BR.UTF-8
+timezone: America/Sao_Paulo
+
+## Pacotes common
+common_packages:
+    - locales
+    - aspell-pt-br
+    - aptitude
+    - screen
+    - iptraf
+    - bzip2
+    - fping
+    - lsof
+    - links
+    - links2
+    - curl
+    - less
+    - locales
+    - logtail
+    - lsb-release
+    - pv
+    - rsync
+    - rcconf
+    - unzip
+    - wget
+    - vim
+    - htop
+    - strace
+    - nmon
+    - tzdata
+    - apt-transport-https
+    - screen
+    - python
+    - sudo
+    - nmap
+    - python-psycopg2
+    - subversion
+    - iptraf
+    - fping
+    - git
+
+## Pacotes Elasticsearch
+elasticsearch_packages:
+    - openjdk-8-jre-headless
+    - uuid-runtime
+    - pwgen
+    - elasticsearch
+
+## Configuracao elasticsearch
+# Heap size defaults to 256m min, 1g max
+# Set ES_HEAP_SIZE to 50% of available RAM, but no more than 31g
+ES_HEAP_SIZE: 512m
+# Nome do host do graylog
+cluster_name: gray2
+
+## Pacotes Mongodb
+mongodb_packages:
+    - mongodb
+    - python-pymongo
+# Nome do banco, usuario e senha 
+mongodb_database: graylog2
+mongodb_usuario: grayloguser
+mongodb_senha: gray123
+
+## Graylog
+# Gere uma senha de seguranca usando o comando: pwgen -N -1 -s 96
+password_secret: oSNnaYn4UGnZfbYwMiq1AZAfeMvFhuuE3LAfeEfLZ1cFMEOxwtjS5COTEDHqi2eV5dXC5oM0iRxW2rHy2kL5GRZr53crC9u3
+# Crie uma senha para o usuário Administrativo ‘admin’ com o comando: echo -n senha | sha256sum
+root_password_sha2: 4602b3d77523e64350a84c6b679b0df891e016a7ba4260f8346203215ebcefe0
+# Rest API para a conexao
+rest_listen_uri: http://127.0.0.1:9000/api/
+# Quantidade de nodes e replicas do elastsearch
+elasticsearch_shards: 1
+elasticsearch_replicas: 0
+elasticsearch_cluster_name: gray2
+
+## Nginx
+nginx_packages:
+    - nginx
+# Ip do servidor
+nginx_ip: 10.0.117.3

@@ -1,0 +1,11 @@
+- name: Aguarde instalando pacote graylog-repository
+  apt: deb=https://packages.graylog2.org/repo/packages/graylog-2.1-repository_latest.deb
+
+- name: Instalando graylog2-server
+  apt: name=graylog-server update_cache=yes
+
+- name: Configurando o graylog.
+  template: src=server.conf dest=/etc/graylog/server/server.conf force=yes backup=yes
+
+- name: Reiniciando o servico.
+  service: name=graylog-server state=restarted

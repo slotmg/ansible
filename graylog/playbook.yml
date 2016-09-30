@@ -1,0 +1,9 @@
+- name: Comecando instalacao.
+  hosts: all
+  remote_user: root
+  roles:
+    - common
+    - elasticsearch
+    - mongodb
+    - graylog
+    - nginx
