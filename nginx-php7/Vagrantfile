@@ -1,0 +1,31 @@
+#   -*- mode:   ruby    -*-
+#   vi: set ft=ruby :
+VAGRANTFILE_API_VERSION =   "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+	config.vm.box = "debian/jessie64"
+	config.ssh.insert_key = false
+
+	config.vm.provider :virtualbox do |v|
+		v.name = "nginx"
+		v.memory = 512
+		v.cpus = 1
+		v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+		v.customize ["modifyvm", :id, "--ioapic", "on"]
+		v.customize ["modifyvm", :id, "--memory", "1024"]
+	end
+
+	config.vm.hostname = "nginx"
+	config.vm.network :private_network, ip: "10.0.117.2"
+
+	config.vm.define :nginx do |nginx|
+	end
+
+	config.vm.provision "ansible" do |ansible|
+		ansible.playbook = "ansible/playbook.yml"
+		ansible.sudo = true
+		ansible.verbose = "v"
+	end
+end
+
+

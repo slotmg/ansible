@@ -1,0 +1,17 @@
+- name: Adicionando chaves
+  apt_key: url=https://www.dotdeb.org/dotdeb.gpg state=present validate_certs=no
+
+- name: Adicionando repositorio.
+  apt_repository: repo='deb http://packages.dotdeb.org jessie all' state=present
+
+- name: Instalando pacotes.
+  apt: name={{ item }} state=latest install_recommends=yes update_cache=yes
+  with_items:
+    - php7.0-cli
+    - php7.0-curl
+    - php7.0-dev
+    - php7.0-fpm
+    - php7.0-gd
+    - php7.0-mcrypt
+    - php7.0-xml
+    - php7.0-opcache

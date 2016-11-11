@@ -1,0 +1,9 @@
+- name: Comecando instalacao.
+  hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+    - include: tasks/common.yml
+    - include: tasks/nginx.yml
+    - include: tasks/php7.yml

@@ -1,0 +1,10 @@
+- name: Configurando repositorio 
+  copy: src=files/sources.list dest=/etc/apt/sources.list
+
+- name: Instalando pacotes.
+  apt: name={{item}} state=latest install_recommends=yes update_cache=yes
+  with_items:
+    - apt-transport-https
+    - vim
+    - git
+    - links
